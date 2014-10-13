@@ -10,9 +10,9 @@
 /**
  * Register the widget for use in Appearance -> Widgets
  */
-add_action( 'widgets_init', 'jetpack_top_posts_widget_init' );
+add_action( 'widgets_init', 'jetpack_recent_posts_widget_init' );
 
-function jetpack_top_posts_widget_init() {
+function jetpack_recent_posts_widget_init() {
  // Currently, this widget depends on the Stats Module
  if (
   ( !defined( 'IS_WPCOM' ) || !IS_WPCOM )
@@ -22,23 +22,23 @@ function jetpack_top_posts_widget_init() {
   return;
  }
 
- register_widget( 'Jetpack_Top_Posts_Widget' );
+ register_widget( 'Jetpack_Recent_Posts_Widget' );
 }
 
-class Jetpack_Top_Posts_Widget extends WP_Widget {
- var $alt_option_name = 'widget_stats_topposts';
+class Jetpack_Recent_Posts_Widget extends WP_Widget {
+ var $alt_option_name = 'widget_recentposts';
  var $default_title = '';
 
  function __construct() {
   parent::__construct(
-   'top-posts',
-   apply_filters( 'jetpack_widget_name', __( 'Top Posts &amp; Pages', 'jetpack' ) ),
+   'recent-posts',
+   apply_filters( 'jetpack_widget_name', __( 'Recent Posts', 'jetpack' ) ),
    array(
-    'description' => __( 'Shows your most viewed posts and pages.', 'jetpack' ),
+    'description' => __( 'Shows your most recent posts.', 'jetpack' ),
    )
   );
 
-  $this->default_title =  __( 'Top Posts &amp; Pages', 'jetpack' );
+  $this->default_title =  __( 'Recent Posts, 'jetpack' );
 
   if ( is_active_widget( false, false, $this->id_base ) ) {
    add_action( 'wp_print_styles', array( $this, 'enqueue_style' ) );
@@ -88,7 +88,7 @@ class Jetpack_Top_Posts_Widget extends WP_Widget {
    </ul>
   </p>
 
-  <p><?php esc_html_e( 'Top Posts &amp; Pages by views are calculated from 24-48 hours of stats. They take a while to change.', 'jetpack' ); ?></p>
+
 
   <?php
  }
@@ -145,7 +145,7 @@ class Jetpack_Top_Posts_Widget extends WP_Widget {
    } else {
     $get_image_options['avatar_size'] = 40;
    }
-   $get_image_options = apply_filters( 'jetpack_top_posts_widget_image_options', $get_image_options );
+   $get_image_options = apply_filters( 'jetpack_recent_posts_widget_image_options', $get_image_options );
   }
 
   $posts = $this->get_by_views( $count );
